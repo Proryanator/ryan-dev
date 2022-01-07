@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Enemy
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Ground
+  - Damage
+  - Player
+  - Enemy
+  - PlayerHealth
+  - EnemyHealth
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Parallax
+    uniqueID: 3222855567
+    locked: 0
+  - name: Background
+    uniqueID: 3903235763
+    locked: 0
+  - name: Ground
+    uniqueID: 1279178641
+    locked: 0
+  - name: Character
+    uniqueID: 260304709
+    locked: 0
+  - name: FrontGround
+    uniqueID: 1231887185
+    locked: 0
