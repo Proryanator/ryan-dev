@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(SpriteMask))]
 public class Splat : MonoBehaviour
 {
     public int orderLayerInBackGround   = 6;
     public int orderLayerInForeGround   = 7;
 
     public bool VisibleInsideSpriteMask = true;
-
+    
     public enum SplatLocation {
         Foreground,
         Background,
@@ -22,19 +24,25 @@ public class Splat : MonoBehaviour
 
     private SplatLocation splatLocation;
     private SpriteRenderer spriteRenderer;
-
+    private SpriteMask spriteMask;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteMask = GetComponent<SpriteMask>();
     }
 
-    public void Initialize(SplatLocation splatLocation) {
+    public void Initialize(SplatLocation splatLocation, Sprite tileMapSprite) {
         this.splatLocation = splatLocation;
         SetSprite();
         SetSize();
         SetRotation();
 
         SetLocationProperties();
+        SetSpriteMask(tileMapSprite);
+    }
+
+    private void SetSpriteMask(Sprite tileMapSprite){
+        spriteMask.sprite = tileMapSprite;
     }
 
     void SetSprite() {

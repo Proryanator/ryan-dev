@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SplatParticles : MonoBehaviour
 {
@@ -10,11 +11,15 @@ public class SplatParticles : MonoBehaviour
     public Transform splatHolder;
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
-    private void Start()
-    {
+    // the only layers that we'll want to spawn blood marks on
+    private string[] bloodMaskLayerNames = { "Ground", "Wall" };
+    private LayerMask bloodLayerMask;
+    
+    private void Start(){
+        bloodLayerMask = LayerMask.GetMask(bloodMaskLayerNames);
         splatPrefab = Resources.Load("PrefabSinglePlayer/Bloods/Splat Sprite") as GameObject;
     }
-
+    
     private void OnParticleCollision(GameObject other)
     {
         ParticlePhysicsExtensions.GetCollisionEvents(splatParticles, other, collisionEvents);
@@ -22,10 +27,29 @@ public class SplatParticles : MonoBehaviour
         int count = collisionEvents.Count;
 
         for (int i = 0; i < count; i++) {
-            GameObject splat = Instantiate(splatPrefab, collisionEvents[i].intersection, Quaternion.identity) as GameObject;
+            // collect the collider, and by extension, the sprite of the tilemap the particle hit
+            ParticleCollisionEvent particleEvent = collisionEvents[i];
+            GameObject go = particleEvent.colliderComponent.gameObject;
+            
+            // ignore collisions that are not with pre-defined collision layers
+            if (!ContainsLayer(bloodLayerMask, go.layer)){
+                continue;
+            }
+            
+            Tilemap tilemap = go.GetComponent<Tilemap>();
+            // the collision sometimes does not mask the alpha part very well
+            Tile collisionTile = (Tile) tilemap.GetTile(tilemap.layoutGrid.WorldToCell(particleEvent.intersection));
+
+            GameObject splat = Instantiate(splatPrefab, particleEvent.intersection, Quaternion.identity);
             splat.transform.SetParent(splatHolder, true);
             Splat splatScript = splat.GetComponent<Splat>();
-            splatScript.Initialize(Splat.SplatLocation.Foreground);
+            // collect the sprite at some point, including 1 sprite farther away to allow for farther blood splatter
+            splatScript.Initialize(Splat.SplatLocation.Foreground, collisionTile.sprite);
         }
+    }
+    
+    private static bool ContainsLayer(LayerMask mask, int layer)
+    {
+        return mask == (mask | (1 << layer));
     }
 }
