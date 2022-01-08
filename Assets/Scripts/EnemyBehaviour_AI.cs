@@ -65,7 +65,8 @@ public class EnemyBehaviour_AI : MonoBehaviour
         {
             FollowPlayer();
         }
-        else{
+        else
+        {
             Patrol();
         }
     }
@@ -92,7 +93,8 @@ public class EnemyBehaviour_AI : MonoBehaviour
     /// <summary>
     /// Normalizes vector towards the player and moves either left/right towards the player
     /// </summary>
-    private void FollowPlayer(){
+    private void FollowPlayer()
+    {
         Vector2 normalizedDirectionToPlayer = new Vector2(directionTowardsPlayer.normalized.x, 0);
         Move(normalizedDirectionToPlayer, moveSpeed);
     }
@@ -100,12 +102,14 @@ public class EnemyBehaviour_AI : MonoBehaviour
     /// <summary>
     /// Enemy wanders in a right to left pattern. Enemy reverses direction to avoid falling off a cliff or hitting a wall
     /// </summary>
-    private void Patrol(){
+    private void Patrol()
+    {
         int lookAheadDistance = 1;
         Vector2 lookAhead = (Vector2) transform.position + (patrolDirection * lookAheadDistance);
         
         Debug.DrawLine(transform.position, lookAhead, Color.blue);
-        if (WillEnemyWalkOffCliff(lookAhead, lookAheadDistance) || WillEnemyHitWall(lookAhead, lookAheadDistance)){
+        if (WillEnemyWalkOffCliff(lookAhead, lookAheadDistance) || WillEnemyHitWall(lookAhead, lookAheadDistance))
+        {
             patrolDirection *= -1;
         }
         
@@ -113,14 +117,17 @@ public class EnemyBehaviour_AI : MonoBehaviour
         Move(patrolDirection, moveSpeed);
     }
 
-    private void Move(Vector2 direction, int moveSpeed){
+    private void Move(Vector2 direction, int moveSpeed)
+    {
         Rigidbody.velocity = new Vector2(moveSpeed * direction.x, Rigidbody.velocity.y);
     }
+    
     /// <summary>
     /// Determine if some distance ahead of the enemy's current position will cause it to collide with a wall
     /// </summary>
     /// <returns>true if the enemy will collide with a wall soon, false if not</returns>
-    private bool WillEnemyHitWall(Vector2 lookAhead, int lookDistance){
+    private bool WillEnemyHitWall(Vector2 lookAhead, int lookDistance)
+    {
         RaycastHit2D wallHit = Physics2D.Raycast(lookAhead, patrolDirection, lookDistance);
         return wallHit.collider != null && wallHit.collider.CompareTag("Ground");
     }
@@ -129,7 +136,8 @@ public class EnemyBehaviour_AI : MonoBehaviour
     /// Determine if some distance ahead of the enemy's current position will cause it to fall off a cliff
     /// </summary>
     /// <returns>true if the enemy falls off soon, false if not</returns>
-    private bool WillEnemyWalkOffCliff(Vector2 lookAhead, int lookDistance){
+    private bool WillEnemyWalkOffCliff(Vector2 lookAhead, int lookDistance)
+    {
         RaycastHit2D groundHit = Physics2D.Raycast(lookAhead, Vector2.down, lookDistance);
         return groundHit.collider == null || !groundHit.collider.CompareTag("Ground");
     }
@@ -138,7 +146,8 @@ public class EnemyBehaviour_AI : MonoBehaviour
     /// Determine if the enemy can currently see the player, should not count seeing the tilemap layer
     /// </summary>
     /// <returns>true if the player is seen, false if not</returns>
-    private bool CanSeePlayer(){
+    private bool CanSeePlayer()
+    {
         // can adjust the view distance later on
         RaycastHit2D hit = Physics2D.Raycast(transform.position, directionTowardsPlayer, float.MaxValue, playerLayer);
         
