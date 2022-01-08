@@ -1828,6 +1828,7 @@ GameObject:
   - component: {fileID: 646167089}
   - component: {fileID: 646167088}
   - component: {fileID: 646167090}
+  - component: {fileID: 646167091}
   m_Layer: 13
   m_Name: EnemyAxe
   m_TagString: Enemy
@@ -1883,6 +1884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e834f9601e15b49b56746080952ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolSpeed: 3
 --- !u!61 &646167090
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1909,6 +1911,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5882807, y: 0.57970333}
   m_EdgeRadius: 0
+--- !u!114 &646167091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646167086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cce439f5e0342bdb05b65755badeb2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &958264440
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,7 +2042,7 @@ GameObject:
   - component: {fileID: 996188528}
   m_Layer: 10
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
