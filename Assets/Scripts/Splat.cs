@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(SpriteMask))]
 public class Splat : MonoBehaviour
 {
     public int orderLayerInBackGround   = 6;
@@ -21,28 +20,23 @@ public class Splat : MonoBehaviour
     public float maxSizeMod = 1.5f;
 
     public Sprite[] sprites;
-
+    
+    [SerializeField]
     private SplatLocation splatLocation;
     private SpriteRenderer spriteRenderer;
-    private SpriteMask spriteMask;
+    
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteMask = GetComponent<SpriteMask>();
     }
 
-    public void Initialize(SplatLocation splatLocation, Sprite tileMapSprite) {
+    public void Initialize(SplatLocation splatLocation) {
         this.splatLocation = splatLocation;
         SetSprite();
         SetSize();
         SetRotation();
 
         SetLocationProperties();
-        SetSpriteMask(tileMapSprite);
-    }
-
-    private void SetSpriteMask(Sprite tileMapSprite){
-        spriteMask.sprite = tileMapSprite;
     }
 
     void SetSprite() {

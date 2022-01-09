@@ -83,8 +83,7 @@ public class EnemyBehaviour_AI : MonoBehaviour
                 GameObject splat = Instantiate(splatPrefab, transform.position + positionNew, Quaternion.identity) as GameObject;
                 splat.transform.SetParent(SplatHolder.transform, true);
                 Splat splatScript = splat.GetComponent<Splat>();
-                // TODO: will also want to set a sprite mask for the walls here
-                splatScript.Initialize(Splat.SplatLocation.Background, null);
+                splatScript.Initialize(Splat.SplatLocation.Background);
             }
             SplatParticles.transform.position = transform.position;
             SplatParticles.Play();

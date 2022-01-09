@@ -19,9 +19,8 @@ public class SplatParticles : MonoBehaviour
         bloodLayerMask = LayerMask.GetMask(bloodMaskLayerNames);
         splatPrefab = Resources.Load("PrefabSinglePlayer/Bloods/Splat Sprite") as GameObject;
     }
-    
-    private void OnParticleCollision(GameObject other)
-    {
+
+    private void OnParticleCollision(GameObject other){
         ParticlePhysicsExtensions.GetCollisionEvents(splatParticles, other, collisionEvents);
 
         int count = collisionEvents.Count;
@@ -30,24 +29,24 @@ public class SplatParticles : MonoBehaviour
             // collect the collider, and by extension, the sprite of the tilemap the particle hit
             ParticleCollisionEvent particleEvent = collisionEvents[i];
             GameObject go = particleEvent.colliderComponent.gameObject;
-            
+
             // ignore collisions that are not with pre-defined collision layers
             if (!ContainsLayer(bloodLayerMask, go.layer)){
                 continue;
             }
             
-            Tilemap tilemap = go.GetComponent<Tilemap>();
-            // the collision sometimes does not mask the alpha part very well
-            Tile collisionTile = (Tile) tilemap.GetTile(tilemap.layoutGrid.WorldToCell(particleEvent.intersection));
+            // determine the location of the collision and change it's color
+            Splat.SplatLocation location = go.layer == LayerMask.NameToLayer("Ground")
+                ? Splat.SplatLocation.Foreground
+                : Splat.SplatLocation.Background;
 
             GameObject splat = Instantiate(splatPrefab, particleEvent.intersection, Quaternion.identity);
             splat.transform.SetParent(splatHolder, true);
             Splat splatScript = splat.GetComponent<Splat>();
-            // collect the sprite at some point, including 1 sprite farther away to allow for farther blood splatter
-            splatScript.Initialize(Splat.SplatLocation.Foreground, collisionTile.sprite);
+            splatScript.Initialize(location);
         }
     }
-    
+
     private static bool ContainsLayer(LayerMask mask, int layer)
     {
         return mask == (mask | (1 << layer));
