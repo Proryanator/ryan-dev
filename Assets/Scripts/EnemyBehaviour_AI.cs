@@ -17,20 +17,20 @@ public class EnemyBehaviour_AI : MonoBehaviour
     GameObject splatPrefab;
     
     private Collider2D playerCollider;
-    // would populate this with layers we want the enemy to ignore, like other enemies or items
-    private ContactFilter2D enemyVisionFilter;
+    private ContactFilter2D playerOnlyFilter;
     private LayerMask playerLayer;
     private Vector2 patrolDirection = Vector2.right;
 
-    [SerializeField] private int moveSpeed = 3;
+    [SerializeField] 
+    private int moveSpeed = 3;
 
     private Vector2 directionTowardsPlayer;
         
     void Awake()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
-        enemyVisionFilter = new ContactFilter2D();
-        enemyVisionFilter.SetLayerMask(playerLayer);
+        playerOnlyFilter = new ContactFilter2D();
+        playerOnlyFilter.SetLayerMask(playerLayer);
         playerLayer = LayerMask.GetMask("Player", "Ground");
     }
 
@@ -108,12 +108,13 @@ public class EnemyBehaviour_AI : MonoBehaviour
         Vector2 lookAhead = (Vector2) transform.position + (patrolDirection * lookAheadDistance);
         
         Debug.DrawLine(transform.position, lookAhead, Color.blue);
+        
+        // invert the direction the enemy is walking
         if (WillEnemyWalkOffCliff(lookAhead, lookAheadDistance) || WillEnemyHitWall(lookAhead, lookAheadDistance))
         {
             patrolDirection *= -1;
         }
         
-        // move in the patrol direction
         Move(patrolDirection, moveSpeed);
     }
 

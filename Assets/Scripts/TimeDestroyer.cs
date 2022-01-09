@@ -39,7 +39,7 @@ public class TimeDestroyer : MonoBehaviour {
 
     IEnumerator Fade()
     {
-        if (isSpriteMask) 
+        if (!isSpriteMask) 
         {
             float value = sprite.color.a;
             while (value > 0)
