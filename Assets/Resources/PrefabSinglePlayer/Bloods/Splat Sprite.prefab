@@ -104,6 +104,7 @@ MonoBehaviour:
   - {fileID: 6972092048984209538, guid: 99bd92b62be678841a23e3079211320f, type: 3}
   - {fileID: 2050595625078158564, guid: 99bd92b62be678841a23e3079211320f, type: 3}
   - {fileID: 2371604999944860304, guid: 99bd92b62be678841a23e3079211320f, type: 3}
+  splatLocation: 0
 --- !u!114 &4236119005969727242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,5 +117,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407f3c679f9117546b62537018bc2199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSpriteMask: 0
+  isSpriteMask: 1
   timeToDestroy: 10
