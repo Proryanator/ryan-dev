@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderLayerInBackGround: 6
   orderLayerInForeGround: 7
-  VisibleInsideSpriteMask: 0
+  VisibleInsideSpriteMask: 1
   backgroundTint: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0.7058824}
   minSizeMod: 0.3
   maxSizeMod: 0.9
@@ -104,6 +104,7 @@ MonoBehaviour:
   - {fileID: 6972092048984209538, guid: 99bd92b62be678841a23e3079211320f, type: 3}
   - {fileID: 2050595625078158564, guid: 99bd92b62be678841a23e3079211320f, type: 3}
   - {fileID: 2371604999944860304, guid: 99bd92b62be678841a23e3079211320f, type: 3}
+  splatLocation: 0
 --- !u!114 &4236119005969727242
 MonoBehaviour:
   m_ObjectHideFlags: 0

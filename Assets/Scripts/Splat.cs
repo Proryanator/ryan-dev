@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Splat : MonoBehaviour
 {
     public int orderLayerInBackGround   = 6;
     public int orderLayerInForeGround   = 7;
+    
+    // also hard-coding the sorting layer names, would store somewhere better
+    public string backgroundSortingLayer = "Background";
+    public string foregroundSortingLayer = "Ground";
 
     public bool VisibleInsideSpriteMask = true;
-
+    
     public enum SplatLocation {
         Foreground,
         Background,
@@ -19,10 +24,11 @@ public class Splat : MonoBehaviour
     public float maxSizeMod = 1.5f;
 
     public Sprite[] sprites;
-
+    
+    [SerializeField]
     private SplatLocation splatLocation;
     private SpriteRenderer spriteRenderer;
-
+    
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -60,13 +66,25 @@ public class Splat : MonoBehaviour
                 if(VisibleInsideSpriteMask)
                     spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
                 spriteRenderer.sortingOrder = orderLayerInBackGround;
+                spriteRenderer.sortingLayerID = GetSortingLayerIdFromName(backgroundSortingLayer);
                 break;
 
             case SplatLocation.Foreground:
                 if (VisibleInsideSpriteMask)
                     spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                spriteRenderer.sortingLayerID = GetSortingLayerIdFromName(foregroundSortingLayer);
                 spriteRenderer.sortingOrder = orderLayerInForeGround;
                 break;
         }
+    }
+
+    private int GetSortingLayerIdFromName(string name){
+        foreach (SortingLayer sortingLayer in SortingLayer.layers){
+            if (sortingLayer.name == name){
+                return sortingLayer.id;
+            }
+        }
+
+        return -1;
     }
 }
