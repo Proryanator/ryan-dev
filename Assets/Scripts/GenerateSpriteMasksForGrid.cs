@@ -80,6 +80,7 @@ public class GenerateSpriteMasksForGrid : MonoBehaviour{
     /// <param name="sprite">Sprite to set as the sprite mask</param>
     /// <param name="parent">The parent transform to hold all the sprite masks under</param>
     /// <param name="sortingInLayer">The index from the splat prefab for this sprite masks' range</param>
+    /// <param name="sortingLayerId">The sorting layer to put this sprite mask's foreground/background on</param>
     private void SpawnBloodSpriteMask(Vector3 location, Sprite sprite, Transform parent, int sortingInLayer, int sortingLayerId){
         GameObject cellSpriteMask = Instantiate(cellSpriteMaskPrefab, location, Quaternion.identity);
         cellSpriteMask.transform.SetParent(parent);
